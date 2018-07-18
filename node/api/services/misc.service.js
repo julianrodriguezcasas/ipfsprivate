@@ -1,0 +1,35 @@
+// misc.service.js
+
+const Log = require('log');
+const connectionHelperIPFS = require('../helpers/ipfsConnection.helper');
+
+// //////////////////////////////////////////////////////////////////////////////
+// PROPERTIES
+// //////////////////////////////////////////////////////////////////////////////
+
+const serviceName = '[Misc service]';
+const log = new Log('debug');
+
+// //////////////////////////////////////////////////////////////////////////////
+// PUBLIC FUNCTIONS
+// //////////////////////////////////////////////////////////////////////////////
+
+async function healthcheck() {
+  try {
+    log.info(`----->IN ${serviceName} ${healthcheck.name}`);
+    const result = await connectionHelperIPFS.getIPFSStat();
+    log.info(`----->OUT ${serviceName} ${healthcheck.name} Success`);
+    return result;
+  } catch (error) {
+    log.error(`----->OUT ${serviceName} ${healthcheck.name} (ERROR): ${JSON.stringify(error.stack)}`);
+    throw error;
+  }
+}
+
+// //////////////////////////////////////////////////////////////////////////////
+// PRIVATE FUNCTIONS
+// //////////////////////////////////////////////////////////////////////////////
+
+module.exports = {
+  healthcheck,
+};
