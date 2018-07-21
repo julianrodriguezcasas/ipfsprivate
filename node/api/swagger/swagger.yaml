@@ -51,7 +51,7 @@ paths:
             $ref: "#/definitions/errorResponse"
 
 ###############################
-#######   HEALTHCHECK  ########
+#####   CONFIGURATION  ########
 ###############################
 
   /configuration:
@@ -99,7 +99,7 @@ paths:
       parameters:
         - in: body
           name: newPeer
-          description: New peer data connection.
+          description: IP address of the node you want to connect to
           schema:
             $ref: "#/definitions/NewPeer"
       responses:
@@ -176,10 +176,10 @@ definitions:
 ############################### 
   NewPeer:
     properties:
-      ip:
+      IP:
         type: string
     required:
-      - ip
+      - IP
 
 ###############################
 ########## RESPONSES ##########

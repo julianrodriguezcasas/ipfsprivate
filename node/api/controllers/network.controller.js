@@ -25,24 +25,24 @@ async function getNetworkConfig(req, res) {
     res.status(200).send(result);
   } catch (error) {
     log.info(`----->OUT ${controllerName} ${getNetworkConfig.name} (ERROR): ${error}`);
-    res.status(500).send({ message: 'IPFS node is not connected' });
+    res.status(500).send(`${error}`);
   }
 }
 
 async function setNetworkConfig(req, res) {
   try {
-    const { ip } = req.body;
+    const { IP } = req.body;
 
-    log.info(`----->IN ${controllerName} ${setNetworkConfig.name}, Parameters -> ${ip}`);
+    log.info(`----->IN ${controllerName} ${setNetworkConfig.name}, Parameters -> ${IP}`);
 
-    const result = await networkService.setNetworkConfig(ip);
+    const result = await networkService.setNetworkConfig(IP);
 
     log.info(`----->OUT ${controllerName} ${setNetworkConfig.name} -> ${JSON.stringify(result)}`);
 
     res.status(200).send(result);
   } catch (error) {
     log.info(`----->OUT ${controllerName} ${setNetworkConfig.name} (ERROR): ${error}`);
-    res.status(500).send({ message: 'IPFS node is not connected' });
+    res.status(500).send(`${error}`);
   }
 }
 

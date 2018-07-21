@@ -22,10 +22,10 @@ async function getConfiguration(req, res) {
 
     log.info(`----->OUT ${controllerName} ${getConfiguration.name}, (Success)`);
 
-    res.status(200).send(result);
+    res.status(200).send(JSON.parse(result));
   } catch (error) {
     log.info(`----->OUT ${controllerName} ${getConfiguration.name} (ERROR): ${error}`);
-    res.status(500).send(error);
+    res.status(500).send(`${error}`);
   }
 }
 
