@@ -1,27 +1,30 @@
-// misc.service.js
+// configuration.service.js
 
 const Log = require('log');
-const connectionHelperIPFS = require('../helpers/ipfsConnection.helper');
+const ipfsHelper = require('../helpers/ipfs.helper');
 
 // //////////////////////////////////////////////////////////////////////////////
 // PROPERTIES
 // //////////////////////////////////////////////////////////////////////////////
 
-const serviceName = '[Misc service]';
+const serviceName = '[Configuration service]';
 const log = new Log('debug');
 
 // //////////////////////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS
 // //////////////////////////////////////////////////////////////////////////////
 
-async function healthcheck() {
+async function getConfiguration() {
   try {
-    log.info(`----->IN ${serviceName} ${healthcheck.name}`);
-    const result = await connectionHelperIPFS.getIPFSStat();
-    log.info(`----->OUT ${serviceName} ${healthcheck.name} Success`);
+    log.info(`----->IN ${serviceName} ${getConfiguration.name}`);
+
+    const result = await ipfsHelper.getConfiguration();
+
+    log.info(`----->OUT ${serviceName} ${getConfiguration.name}, (Success)`);
+
     return result;
   } catch (error) {
-    log.error(`----->OUT ${serviceName} ${healthcheck.name} (ERROR): ${JSON.stringify(error.stack)}`);
+    log.error(`----->OUT ${serviceName} ${getConfiguration.name} (ERROR): ${JSON.stringify(error.stack)}`);
     throw error;
   }
 }
@@ -31,5 +34,5 @@ async function healthcheck() {
 // //////////////////////////////////////////////////////////////////////////////
 
 module.exports = {
-  healthcheck,
+  getConfiguration,
 };

@@ -17,15 +17,27 @@ consumes:
 produces:
   - application/json
 
+tags:
+  - name: "Healthcheck"
+    description: "Check if IPFS is running"
+  - name: "Configuration"
+    description: "IPFS Node Global Configuration"
+  - name: "Network"
+    description: "IPFS Node network configuration"
+  - name: "File"
+    description: "Add and Get files to IPFS"
+
 paths:
 
 ###############################
-########### MISC ##############
+#######   HEALTHCHECK  ########
 ###############################
 
   /healthcheck:
-    x-swagger-router-controller: misc.controller
+    x-swagger-router-controller: healthcheck.controller
     get:
+      tags:
+        - "Healthcheck"
       description: Check whether the IPFS platform is running
       operationId: healthcheck
       responses:
@@ -38,19 +50,83 @@ paths:
           schema:
             $ref: "#/definitions/errorResponse"
 
-            
+###############################
+#######   HEALTHCHECK  ########
+###############################
+
+  /configuration:
+    x-swagger-router-controller: configuration.controller
+    get:
+      tags:
+        - "Configuration"
+      description: Show Global IPFS Configuration
+      operationId: getConfiguration
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/genericObjectResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+      
 ####################################
-####### DOCUMENTS MANAGEMENT #######
+####   NETWORK CONFIGURATION  ######
 ####################################
 
-  /documents:
-    x-swagger-router-controller: document.controller
+  /network:
+    x-swagger-router-controller: network.controller
     get:
-      description: Get the document from a particular IPFS hash
-      operationId: getData
+      tags:
+        - "Network"
+      description: Get newtork configuration from a node
+      operationId: getNetworkConfig
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/genericObjectResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+    post:
+      tags:
+        - "Network"
+      description: Set network configuration
+      operationId: setNetworkConfig
       parameters:
-        - name: hash
-          in: query
+        - in: body
+          name: newPeer
+          description: New peer data connection.
+          schema:
+            $ref: "#/definitions/NewPeer"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/genericObjectResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+            
+####################################
+#######    FILE MANAGEMENT   #######
+####################################
+
+  /file:
+    x-swagger-router-controller: file.controller
+    get:
+      tags:
+        - "File"
+      description: Get file from a particular IPFS hash
+      operationId: getFile
+      parameters:
+        - in: query
+          name: hash
           type: string
           required: true
       responses:
@@ -63,15 +139,18 @@ paths:
           schema:
             $ref: "#/definitions/errorResponse"
     post:
+      tags:
+        - "File"
       description: Add documents to IPFS
-      operationId: insertDocument
+      operationId: addFile
       consumes:
         - multipart/form-data
       parameters:
         - in: formData
           name: newDocument
           type: file
-          description: The data to upload.
+          description: New file to upload
+          required: true
       responses:
         "200":
           description: Success
@@ -95,7 +174,12 @@ definitions:
 ###############################
 ########### ARGUMENTS #########
 ############################### 
-        
+  NewPeer:
+    properties:
+      ip:
+        type: string
+    required:
+      - ip
 
 ###############################
 ########## RESPONSES ##########

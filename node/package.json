@@ -13,6 +13,7 @@
     "i": "^0.3.6",
     "ipfs-api": "^20.0.1",
     "log": "^1.4.0",
+    "multiaddr": "^5.0.0",
     "swagger": "^0.7.5",
     "swagger-editor": "^3.5.1",
     "swagger-express-mw": "^0.7.0"
