@@ -94,8 +94,8 @@ paths:
     post:
       tags:
         - "Network"
-      description: Set network configuration
-      operationId: setNetworkConfig
+      description: Add new peer to network
+      operationId: addPeer
       parameters:
         - in: body
           name: newPeer

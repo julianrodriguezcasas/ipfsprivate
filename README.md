@@ -2,19 +2,16 @@
 
 #### Inicio proyecto
 
-Configuración docker-compose:
-
-- BOOTSTRAP_PEER={ IP_NODO_REMOTO }
-
+Arrancar la red de IPFS:
 ```
-$ docker-compose up 'ipfsBootstrap' | 'ipfsSwarm'
+docker-compose up -d
 ```
 
-Configuración servicio ipfsBootstrap se requiere lanzar el siguiente comando:
+Arrancar la API en /node:
+```
+docker-compose up -d
+```
 
-```
-$ docker exec ipfsBootstrap "/input/connect.sh"
-```
 
 # Notas
 
@@ -51,5 +48,14 @@ ipfs bootstrap rm --all
 ## Prueba de IPFS con la colección de Postman:
 
 Descarga de la colección de Postman y el entorno de IPFS.
-Pruebas tanto de subir archivos, como obtención de los mismos.
-
+Colecciones:
+            -Files : 
+                    Add new File -> Añadir nuevo archivo
+                    Get File -> Obtener archivo mediante su Hash
+            -Network :
+                    Get Network Node Configuration -> obtener configuración de nodos (Bootstrap y Swarm)
+                    Add Bootstrap Peer -> Añadir nuevo Nodo de tipo Bootstrap
+            -Healthcheck :
+                    Healthcheck -> Comprobación de conectividad con la red IPFS
+            -Node Configuration
+                    Get Node Configuration -> Obtención de la configuración del Nodo

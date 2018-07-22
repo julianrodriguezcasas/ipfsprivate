@@ -7,6 +7,7 @@ const ipfsAPI = require('ipfs-api');
 const fileType = require('file-type');
 const Log = require('log');
 const multiaddr = require('multiaddr');
+const axios = require('axios');
 
 // //////////////////////////////////////////////////////////////////////////////
 // IPFS environment
@@ -88,28 +89,28 @@ async function getNetworkConfig() {
   }
 }
 
-async function setNetworkConfig(ip) {
+async function addPeer(ip) {
   try {
-    log.info(`----->IN ${repositoryName} ${setNetworkConfig.name} 
-        -> Configuration IPFS_API : ${JSON.stringify(ipfsConfig)}
-        , Peer IP -> ${ip}`);
+    log.info(`----->IN ${repositoryName} ${addPeer.name} -> Configuration IPFS_API : ${JSON.stringify(ipfsConfig)}`);
+    log.info(`-----> Peer IP -> ${ip}`);
 
-    const ipfsId = await getNodeId();
+    // Obtain peer info from Peer IP
+    const peerInfo = await axios.get(`http://${ip}:5001/api/v0/id`);
 
     // Connection multiaddress peer
-    const connection = `/ip4/${ip}/tcp/4001/ipfs/${ipfsId.id}`;
+    const connection = `/ip4/${ip}/tcp/4001/ipfs/${peerInfo.data.ID}`;
 
-    log.info(`----->Connection ${connection}`);
+    log.info(`----->Peer Connection ${connection}`);
 
     const addr = multiaddr(connection);
 
-    const result = await ipfs.bootstrap.add(addr);
+    const result = await ipfs.bootstrap.add(addr.toString());
 
-    log.info(`----->OUT ${repositoryName} ${setNetworkConfig.name} ${JSON.stringify(result)}`);
+    log.info(`----->OUT ${repositoryName} ${addPeer.name} ${JSON.stringify(result)}`);
 
     return result;
   } catch (error) {
-    log.error(`----->OUT ${repositoryName} ${setNetworkConfig.name} (ERROR): ${JSON.stringify(error.stack)}`);
+    log.error(`----->OUT ${repositoryName} ${addPeer.name} (ERROR): ${JSON.stringify(error.stack)}`);
     throw error;
   }
 }
@@ -163,7 +164,7 @@ module.exports = {
   getNodeId,
   getConfiguration,
   getNetworkConfig,
-  setNetworkConfig,
+  addPeer,
   getFile,
   addFile,
 };

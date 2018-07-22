@@ -29,17 +29,17 @@ async function getNetworkConfig() {
   }
 }
 
-async function setNetworkConfig(ip) {
+async function addPeer(ip) {
   try {
-    log.info(`----->IN ${serviceName} ${setNetworkConfig.name}`);
+    log.info(`----->IN ${serviceName} ${addPeer.name}, Peer IP : ${ip}`);
 
-    const result = await ipfsHelper.setNetworkConfig(ip);
+    const result = await ipfsHelper.addPeer(ip);
 
-    log.info(`----->OUT ${serviceName} ${setNetworkConfig.name} Success`);
+    log.info(`----->OUT ${serviceName} ${addPeer.name} Success`);
 
     return result;
   } catch (error) {
-    log.error(`----->OUT ${serviceName} ${setNetworkConfig.name} (ERROR): ${JSON.stringify(error.stack)}`);
+    log.error(`----->OUT ${serviceName} ${addPeer.name} (ERROR): ${JSON.stringify(error.stack)}`);
     throw error;
   }
 }
@@ -50,5 +50,5 @@ async function setNetworkConfig(ip) {
 
 module.exports = {
   getNetworkConfig,
-  setNetworkConfig,
+  addPeer,
 };

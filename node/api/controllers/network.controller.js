@@ -29,19 +29,19 @@ async function getNetworkConfig(req, res) {
   }
 }
 
-async function setNetworkConfig(req, res) {
+async function addPeer(req, res) {
   try {
     const { IP } = req.body;
 
-    log.info(`----->IN ${controllerName} ${setNetworkConfig.name}, Parameters -> ${IP}`);
+    log.info(`----->IN ${controllerName} ${addPeer.name}, Parameters -> ${IP}`);
 
-    const result = await networkService.setNetworkConfig(IP);
+    const result = await networkService.addPeer(IP);
 
-    log.info(`----->OUT ${controllerName} ${setNetworkConfig.name} -> ${JSON.stringify(result)}`);
+    log.info(`----->OUT ${controllerName} ${addPeer.name} -> ${JSON.stringify(result)}`);
 
     res.status(200).send(result);
   } catch (error) {
-    log.info(`----->OUT ${controllerName} ${setNetworkConfig.name} (ERROR): ${error}`);
+    log.info(`----->OUT ${controllerName} ${addPeer.name} (ERROR): ${error}`);
     res.status(500).send(`${error}`);
   }
 }
@@ -49,5 +49,5 @@ async function setNetworkConfig(req, res) {
 
 module.exports = {
   getNetworkConfig,
-  setNetworkConfig,
+  addPeer,
 };
