@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "a0911b63-87e4-4506-b526-67395d793603",
+		"name": "IPFS_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Files",
+			"description": "",
+			"item": [
+				{
+					"name": "Add new File",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "newDocument",
+									"description": "",
+									"type": "file"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Base_Path}}/file",
+							"host": [
+								"{{Base_Path}}"
+							],
+							"path": [
+								"file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get File",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{Base_Path}}/{{getFile}}QmV3Ezro3pTr6BVeYKkziniovg2rHBVgpcBfEysMDQLLuW",
+							"host": [
+								"{{Base_Path}}"
+							],
+							"path": [
+								"{{getFile}}QmV3Ezro3pTr6BVeYKkziniovg2rHBVgpcBfEysMDQLLuW"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Network",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Network Node Configuration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{Base_Path}}/network",
+							"host": [
+								"{{Base_Path}}"
+							],
+							"path": [
+								"network"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Bootstrap Peer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"IP\": \"127.0.0.1\"\n}"
+						},
+						"url": {
+							"raw": "{{Base_Path}}/network",
+							"host": [
+								"{{Base_Path}}"
+							],
+							"path": [
+								"network"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Healthcheck",
+			"description": "",
+			"item": [
+				{
+					"name": "Healthcheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{Base_Path}}/healthcheck",
+							"host": [
+								"{{Base_Path}}"
+							],
+							"path": [
+								"healthcheck"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Node Configuration",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Node Configuration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{Base_Path}}/configuration",
+							"host": [
+								"{{Base_Path}}"
+							],
+							"path": [
+								"configuration"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

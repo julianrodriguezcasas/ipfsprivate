@@ -1,0 +1,40 @@
+{
+  "name": "ipfs_rest_api",
+  "version": "0.0.1",
+  "private": true,
+  "description": "IPFS API REST with Swagger",
+  "keywords": [],
+  "author": "Blockchain Team",
+  "license": "UNLICENSED",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.12.3",
+    "file-type": "^7.6.0",
+    "i": "^0.3.6",
+    "ipfs-api": "^20.0.1",
+    "log": "^1.4.0",
+    "multiaddr": "^5.0.0",
+    "swagger": "^0.7.5",
+    "swagger-editor": "^3.5.1",
+    "swagger-express-mw": "^0.7.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "should": "^7.1.0",
+    "sinon": "^5.0.10",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "swagger project start",
+    "edit": "swagger project edit",
+    "test": "swagger project test",
+    "lint": "node_modules/eslint/bin/eslint.js api/*",
+    "cover": "istanbul cover node_modules/.bin/_mocha -- --recursive test/"
+  }
+}

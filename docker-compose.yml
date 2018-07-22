@@ -1,0 +1,22 @@
+version: '2'
+services:
+  ipfsBootstrap:
+    extends:
+        file: base.yml
+        service: ipfs
+    hostname: ipfsBootstrap
+    container_name: ipfsBootstrap
+    ports:
+      - "8080:8080"
+      - "4001:4001"
+      - "5001:5001"
+    environment:
+      - IPFS_BIND_IP=0.0.0.0
+      - GATEWAY_PORT=8080
+      - API_PORT=5001
+      - IPFS_LOGGING=info
+      - IPFS_BOOTSTRAP_RM_ALL=true
+      - TYPE=BOOTSTRAP
+    volumes:
+      - ./data/:/input/
+      - ./node:/opt/node

@@ -1,0 +1,202 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: IPFS REST API
+
+host: localhost:10011
+
+basePath: /ipfs
+
+schemes:
+  - http
+  - https
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+tags:
+  - name: "Healthcheck"
+    description: "Check if IPFS is running"
+  - name: "Configuration"
+    description: "IPFS Node Global Configuration"
+  - name: "Network"
+    description: "IPFS Node network configuration"
+  - name: "File"
+    description: "Add and Get files to IPFS"
+
+paths:
+
+###############################
+#######   HEALTHCHECK  ########
+###############################
+
+  /healthcheck:
+    x-swagger-router-controller: healthcheck.controller
+    get:
+      tags:
+        - "Healthcheck"
+      description: Check whether the IPFS platform is running
+      operationId: healthcheck
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/genericObjectResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+###############################
+#####   CONFIGURATION  ########
+###############################
+
+  /configuration:
+    x-swagger-router-controller: configuration.controller
+    get:
+      tags:
+        - "Configuration"
+      description: Show Global IPFS Configuration
+      operationId: getConfiguration
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/genericObjectResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+      
+####################################
+####   NETWORK CONFIGURATION  ######
+####################################
+
+  /network:
+    x-swagger-router-controller: network.controller
+    get:
+      tags:
+        - "Network"
+      description: Get newtork configuration from a node
+      operationId: getNetworkConfig
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/genericObjectResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+    post:
+      tags:
+        - "Network"
+      description: Add new peer to network
+      operationId: addPeer
+      parameters:
+        - in: body
+          name: newPeer
+          description: IP address of the node you want to connect to
+          schema:
+            $ref: "#/definitions/NewPeer"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/genericObjectResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+            
+####################################
+#######    FILE MANAGEMENT   #######
+####################################
+
+  /file:
+    x-swagger-router-controller: file.controller
+    get:
+      tags:
+        - "File"
+      description: Get file from a particular IPFS hash
+      operationId: getFile
+      parameters:
+        - in: query
+          name: hash
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: file
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+    post:
+      tags:
+        - "File"
+      description: Add documents to IPFS
+      operationId: addFile
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: newDocument
+          type: file
+          description: New file to upload
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/genericObjectResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+
+###############################
+########## DEFINITIONS ########
+###############################          
+            
+  /swagger:
+    x-swagger-pipe: swagger_raw
+definitions:
+
+
+###############################
+########### ARGUMENTS #########
+############################### 
+  NewPeer:
+    properties:
+      IP:
+        type: string
+    required:
+      - IP
+
+###############################
+########## RESPONSES ##########
+###############################  
+
+  genericObjectResponse:
+    type: object
+
+      
+###############################
+############ ERRORS ###########
+###############################        
+    
+  errorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+

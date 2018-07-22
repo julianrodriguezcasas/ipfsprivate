@@ -1,0 +1,14 @@
+# MAINTAINER Blockchain_team
+version: "2"
+services:
+  nodeapi:
+    build:
+      context: .
+    user: "root"
+    ports:
+      - "10011:10011"
+    environment:
+      - IPFS_HOST=172.17.0.1
+      - IPFS_PORT=5001
+      - IPFS_PROTOCOL=http
+    command: npm start

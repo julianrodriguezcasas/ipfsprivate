@@ -1,0 +1,38 @@
+// configuration.service.js
+
+const Log = require('log');
+const ipfsHelper = require('../helpers/ipfs.helper');
+
+// //////////////////////////////////////////////////////////////////////////////
+// PROPERTIES
+// //////////////////////////////////////////////////////////////////////////////
+
+const serviceName = '[Configuration service]';
+const log = new Log('debug');
+
+// //////////////////////////////////////////////////////////////////////////////
+// PUBLIC FUNCTIONS
+// //////////////////////////////////////////////////////////////////////////////
+
+async function getConfiguration() {
+  try {
+    log.info(`----->IN ${serviceName} ${getConfiguration.name}`);
+
+    const result = await ipfsHelper.getConfiguration();
+
+    log.info(`----->OUT ${serviceName} ${getConfiguration.name}, (Success)`);
+
+    return result;
+  } catch (error) {
+    log.error(`----->OUT ${serviceName} ${getConfiguration.name} (ERROR): ${JSON.stringify(error.stack)}`);
+    throw error;
+  }
+}
+
+// //////////////////////////////////////////////////////////////////////////////
+// PRIVATE FUNCTIONS
+// //////////////////////////////////////////////////////////////////////////////
+
+module.exports = {
+  getConfiguration,
+};

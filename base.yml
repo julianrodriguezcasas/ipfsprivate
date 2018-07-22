@@ -1,0 +1,12 @@
+version: '2'
+services:
+  ipfs:
+    image: qnib/ipfs
+    environment:
+     - DC_NAME=ipfs
+    volumes:
+     - /data/
+    ports:
+     - 5001
+     - 8080
+    privileged: true
